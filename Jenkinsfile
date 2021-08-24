@@ -6,7 +6,7 @@ pipeline {
    
      stage('Install Dependencies') { 
         steps { 
-           echo "installing application" 
+           echo "installing a123pplication" 
         }
      }
      

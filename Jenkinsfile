@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         
-        dotnet='C:\\Program Files (x86)\\dotnet'
+        dotnet='C:\\Program Files\\dotnet'
         awscli = "C:\\Program Files\\Amazon\\AWSCLIV2\\awscli"
     }
 
@@ -15,27 +15,27 @@ pipeline {
         }
         stage('Restore') {
             steps {
-                bat 'dotnet restore C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
+                bat 'dotnet restore C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
             }
         }
         stage('Clean') {
             steps {
-                bat 'dotnet clean C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
+                bat 'dotnet clean C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
             }
         }
         stage('Build') {
             steps {
-                bat 'dotnet build C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj --configuration Release'
+                bat 'dotnet build C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj --configuration Release'
             }
         }
         stage('Unit Test') {
             steps {
-                bat 'dotnet test C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
+                bat 'dotnet test C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
             }
         }
         stage('Publish') {
             steps {
-                bat 'dotnet publish C:\\WINDOWS\\system32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
+                bat 'dotnet publish C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
             }   
         }
         
@@ -43,10 +43,10 @@ pipeline {
         stage('Uploading') {
                steps {
       // you need cloudbees aws credentials
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '0e6c4ec2-57e5-4bee-b36b-8de0ab7fdbe8', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '7c0bd2d9-0177-4cb4-a32f-bb294c1b81b6', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
                 {
                     bat 'aws s3 ls'
-                    bat 'aws s3 cp C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet6\\ConsoleApp\\ConsoleApp\\bin\\Debug\\netcoreapp3.1\\ConsoleApp.dll  s3://awscli-upload/hi/ConsoleApp.dll'
+                    bat 'aws s3 cp C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\dotnet2\\ConsoleApp\\ConsoleApp\\obj\\Debug\\netcoreapp3.1\\ConsoleApp.dll  s3://awscli-upload/hi/ConsoleApp.dll'
                 }
             }
         }

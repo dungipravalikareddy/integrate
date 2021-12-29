@@ -38,7 +38,15 @@ pipeline {
                 bat 'dotnet publish C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\Dotnet\\ConsoleApp\\ConsoleApp\\ConsoleApp.csproj'
             }   
         }
-        
+        stage ('Versioning') {
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '7c0bd2d9-0177-4cb4-a32f-bb294c1b81b6', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']])
+            {
+                bat'aws s3api put-bucket-versioning --bucket awscli-upload --versioning-configuration Status=Enabled'
+            
+            }
+        }    
+    }    
        
         stage('Uploading') {
                steps {

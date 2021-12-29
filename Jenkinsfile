@@ -16,11 +16,7 @@ pipeline {
                 }
             }
         }
-        stage('restart AppWebsite'){
-            steps {
-                bat 'iisreset'
-            }
-        }
+        
         stage('stop AppWebsite') {
             steps {
                 bat 'C:\\Windows\\System32\\inetsrv\\AppCmd start site "newsite"'
